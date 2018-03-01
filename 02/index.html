@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Challange 02</title>
+    <link rel="stylesheet" href="../assets/bulma.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"> -->
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script> -->
+  </head>
+  <body>
+  <section class="hero is-primary is-bold is-fullheight has-text-centered">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="subtitle is-5 is-uppercase">
+          Llanberis Hydro
+        </h1>
+        <h2 id="value" class="title is-1">- - - W</h2>
+        <div id="chart" style="width:100%;height:300px"></div>
+      </div>
+    </div>
+  </section>
+    <script src="../assets/jquery.min.js"></script>
+    <script src="../assets/jquery.flot.min.js"></script>
+    <script src="../assets/jquery.flot.time.min.js"></script>
+    
+    <script>
+      //on document ready get the data
+      $(function(){
+        $.getJSON('history.php',function(d){
+          $('#value').text(d.latest.value+"W");
+          console.log(d.data);
+          $.plot("#chart", 
+            [{
+              data: d.data,
+              shadowSize: 0,
+              color: 'white'
+            }],
+            {
+			xaxis: {
+                mode: "time",
+                minTickSize: [1, "day"],
+                monthNames: "Ion|Chw|Maw|Ebr|Mai|Meh|Gor|Aws|Med|Hyd|Tac|Rha".split("|"),
+            }
+          });
+        })
+      })
+    </script>
+
+    <script>
+    $(function() {
+
+        
+
+    })
+
+    </script>
+
+        
+  </body>
+</html>
