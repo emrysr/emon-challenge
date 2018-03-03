@@ -1,4 +1,6 @@
 <?php
+//CHALLENGE 3
+header('Content-Type: application/json');
 $id = 166913;//Llanberis Hydro
 $start = strtotime("-1 week")*1000;
 $end = time()*1000;
@@ -8,9 +10,8 @@ $chart_data_url = sprintf('https://emoncms.org/feed/data.json?id=%s&start=%s&end
 $single_site_data_url = sprintf('http://emoncms.org/feed/aget.json?id=%s',$id);
 
 /**
- * return latest or data
+ * return latest or data. else show error
  */
-//routing (ish)
 switch($_GET['q']){
     case 'history':
         echo file_get_contents($chart_data_url);

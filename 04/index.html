@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Challange 02</title>
+  <title>Challange 04</title>
   <link rel="stylesheet" href="../assets/bulma.min.css">
 </head>
 <body>
@@ -39,16 +39,30 @@
     }];
     //on document ready get the data
     $(function(){
-      $.getJSON('history.php')
-      .done(function(d){
-        data[0].data = d.data;
-        $('#value').text(d.latest.value+"W");
-        $.plot($chart, data, opts);
+      
+      //get location data
+      $.getJSON('api.php?q=lastvalue')
+      .done(function (d) {
+        if (d.length == 0) {
+          $('#value').text("Empty!");
+        } else {
+          $('#value').text(d.value + "W");
+          //get graph data
+          $.getJSON('api.php?q=history')
+          .done(function (d) {
+            data[0].data = d;
+            $.plot($chart, data, opts);
+          })
+          .fail(function () {
+            //@todo: retry max times loop. create bug report if fails.
+            $('#value').text("Error...");
+          });
+        }
       })
-      .fail(function(){
+      .fail(function () {
         //@todo: retry max times loop. create bug report if fails.
         $('#value').text("Error...");
-      })
+      });
     });
     //on window resize replot graph
     $(window).resize(function () { 
